@@ -1,0 +1,32 @@
+=> About Laravel Mix:
+
+    Laravel Mix is a package used for CSS/JS compilation, minification, and optimization. 
+    
+    Initially, Webpack was used, but it can be complex to configure. Laravel Mix provides a simpler version of Webpack, making it easier to work with.
+
+
+// MIME error in detail
+
+Error: "Refused to apply style from 'http://localhost:3000/css/app.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled."
+
+Solution => 
+    WHY this happens?
+    =>  1) Browser encountered an issue while trying to apply styles from the file http://   localhost:3000/css/app.css.
+        
+        2) Because its MIME type ('text/html') is not a supported stylesheet MIME type: This is the key part. The server is mistakenly sending the app.css file with a text/html MIME type instead of the correct text/css MIME type.
+
+        3) And strict MIME checking is enabled: Modern browsers have stricter checks on MIME types to ensure files are loaded correctly. Since the received MIME type doesn't match the expected type for a stylesheet, the browser refuses to apply the styles.
+    
+    Solution
+    Using a static file middleware like express.static, counters the error by addressing the root cause of the MIME type mismatch. Here's how it works:
+
+    Serving Static Files: When you use express.static(path.join(__dirname, 'public')), you're essentially telling your Express server to treat the public directory within your project as a directory containing static files.
+
+    Automatic MIME Type Handling: When the browser requests a static file (like app.css) from the public directory, the express.static middleware automatically handles the following tasks:
+        It reads the requested file from the specified directory.
+        It determines the file extension (e.g., .css in this case).
+        Based on the file extension, it looks up the corresponding MIME type in a built-in database or configuration. For .css, it would identify the appropriate MIME type as text/css.
+        It sets the Content-Type header in the response sent to the browser. This header indicates the MIME type of the data being sent.
+
+
+//Important tip: Try to keep all the transition same to maintain better consistency and we can store a seperate expression of the transition in a variable like we did in variables for $smooth

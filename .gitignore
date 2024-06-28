@@ -1,0 +1,35 @@
+# Node.js
+node_modules/
+
+# Build folders
+public/build/
+dist/  # Optional for some React setups
+
+# Editor preferences
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Testing frameworks
+jest/cache/
+coverage/
+
+# Specific file extensions
+*.log
+npm-debug.log
+yarn-error.log
+
+# Temporary files created by build process
+.mix
+
+# Dependency lock files (choose one based on your package manager)
+package-lock.json
+yarn.lock
+
+# OS specific folders
+.DS_Store
+
+# IDE specific helper files
+Thumbs.db

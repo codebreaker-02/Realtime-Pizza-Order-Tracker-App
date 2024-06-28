@@ -1,0 +1,46 @@
+@import './variables.scss';
+
+*{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+}
+body {
+    font-family: 'Lato', sans-serif; //fallback font for Lato is sans-serif, i.e if Lato is not applied then sans-serif will be used
+    -webkit-font-smoothing: antialiased; //The property -webkit-font-smoothing controls the anti-aliasing of fonts, which is the technique used to smooth out the jagged edges of characters and make them appear more visually pleasing. The value antialiased specifies that the font should be rendered with anti-aliasing, resulting in smoother edges.
+    color: $dark;
+}
+
+nav li:last-child a{
+    background: $primary;
+    &:hover{
+        background: $primary-hover;
+    }
+}
+
+nav li a{
+    transition: $smooth;
+    &:hover{
+        color: $primary;
+    }
+}
+
+section.hero {
+    background: $secondary;
+}
+
+.size{
+    background: $secondary;
+}
+
+
+.add-to-cart{
+    border: 2px solid $primary;
+    color: $primary;
+    transition: $smooth;
+    &:hover{
+        background: $primary;
+        border-color: $pure;
+        color: $pure;
+    }
+}
