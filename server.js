@@ -15,7 +15,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //set a template engine
 app.use(expressLayout);
-app.set('layout', false);
 app.set('views', path.join(__dirname, '/resources/views'))
 app.set('view engine', 'ejs');
 
@@ -23,6 +22,21 @@ app.set('view engine', 'ejs');
 // Define a route for the root URL
 app.get('/', (req, res) => {
     res.render('home');
+});
+
+// Define a route for the register page
+app.get('/register', (req, res) => {
+    res.render('auth/register')
+});
+
+// Define a route for the login page
+app.get('/login', (req, res) => {
+    res.render('auth/login')
+});
+
+// Define a route for the cart page
+app.get('/cart', (req, res) => {
+    res.render('customers/cart')
 });
 
 // Start the server and listen on the specified port
