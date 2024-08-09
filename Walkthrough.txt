@@ -26,7 +26,85 @@ Solution =>
         It reads the requested file from the specified directory.
         It determines the file extension (e.g., .css in this case).
         Based on the file extension, it looks up the corresponding MIME type in a built-in database or configuration. For .css, it would identify the appropriate MIME type as text/css.
+
         It sets the Content-Type header in the response sent to the browser. This header indicates the MIME type of the data being sent.
 
 
 //Important tip: Try to keep all the transition same to maintain better consistency and we can store a seperate expression of the transition in a variable like we did in variables for $smooth
+
+
+//About sessions:
+Session are stored in a key value pair in server or anywhere.
+1) Where to store? 
+    There are 4 ways to store sessions on server:
+    1) Memory 
+    2) File
+    3) Redis Cache Based System
+    4) Database
+
+2) 
+
+//About storing sessions on database 
+
+1) install connect-mongo
+
+2) 
+
+// About building the cart functionality 
+
+1) To get the current pizza item on click we can send that pizza item coming from the forEach loop as an attribute to the 'Add' button and then from that add button we can simply extract the attribute using the DOM method in the javascript file.
+
+2) after getting that item we are calling a updateCart function and sending it the pizaa item we extracted in js using DOM
+
+3) Here in the updateCart function we are calling an axios post request
+
+    I don't know the reason of making this call?
+    Solution => Yet to find
+
+4) To handle this updateCart request we are basically adding a new post request handler in our server and then add the update function in controller 
+
+
+
+//I was getting an error in the functionality of clicking the add button: 
+    On clicking the add button I was not always able to send the updateCart request
+
+Solution: Later I realized that the add button has 2 span inside it having no attribute called data-pizza and clicking on them lead to trigger the event from them only and the js logic couldn't find any attribute and resulting in considering it as null.
+
+So, this is because of the e.target property which consider the event from that particular element only 
+So the solution is to use e.currentTarget property
+
+            The currentTarget property of the Event interface in JavaScript is particularly useful in event handling, especially with event delegation scenarios. Here's how it functions and its utility in the context of your code:
+
+            How currentTarget Functions:
+            Event Targeting: In an event listener, event.target refers to the element that triggered the event, which could be the element itself or any of its descendants. In contrast, event.currentTarget refers to the element to which the event listener is attached.
+            Consistency: event.currentTarget remains consistent and always refers to the element the event listener is attached to, regardless of where the event originated from within that element.
+
+            Utility in Your Code:
+
+            In your code snippet, when a button (btn) is clicked, even if the click occurs on a child element inside the button, event.currentTarget ensures that the reference stays on the button itself, not the child element that might have been clicked. 
+            
+            This is crucial for the following reasons:
+
+                Attribute Access: It allows reliable access to the button's attributes, such as data-pizza. If event.target were used and the click happened on a child element, that child might not have the data-pizza attribute, leading to errors.
+                
+                Consistent Behavior: It ensures that the behavior is consistent regardless of where the click occurs within the button. This is essential for UI elements like buttons that might contain icons or spans as children.
+
+                Error Prevention: By ensuring you're always working with the button element itself, it prevents errors that could occur if the event target was mistakenly assumed to be the button when it could have been a child element.
+
+
+//How to display the totalQty from session to the homepage?
+  The main question was How to access session in the views(ejs) 
+
+=>  The solution I got is that :
+    // Make a Global Middleware to make session data available in all views
+        app.use((req, res, next) => {
+            res.locals.session = req.session;
+            next();
+        });
+    //This code just make the session data visible to all the views, for more info. read below:
+    Q. How does response object having method res.locals is accessed by the views if that request is not made by them, but by some function like updateCart?
+        => res.locals is an object that contains response local variables scoped to the request and response cycle. These variables are only available to the view that is rendered during that request-response cycle.
+        When you set a property on res.locals, it makes that property available to any view rendered as part of the current request-response cycle.
+
+
+

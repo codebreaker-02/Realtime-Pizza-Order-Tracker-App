@@ -1,3 +1,3 @@
 1) To compile the scss and js, first run npx mix (to run laravel-mix)
-
-2) To run the server use yarn dev
+2) To continously watch for changes in the mix file use command => "npx mix watch"
+2) To run the server use "yarn dev"
