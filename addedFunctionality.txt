@@ -1,0 +1,68 @@
+I) Password validation
+I was thinking of adding a functionality of password validation in the register form 
+
+It was simple to think, we were getting the form details on the backend to check the name pass and email and send some message using the flash library
+
+So, I thought that why couldn't we just validate the password and send that error too (if exist)
+
+But I thought of making it more creative and I wanted to print a list having all the parameters that requires a password to be strong ( and not show error) 
+When the register request is made then it will simply tick the points that follow the checks in the pass and simply cross the points that don't 
+
+So, while making the check in authController we have to send some parameters too after check that will show the tick and cross and green and red color according to the password, and I thought that I can simply send the boolean object containing the values but that lead to error because flash is not handling the object correctly as it is designed to handle the string values ( usually the messages )
+So After searching I got to know that I have to convert the js object to JSON using stringify and then again parse it back to js object on the client-side and that worked!!! 
+
+But After testing the code I found out that it was not looking good with ejs and thought of making later in react.
+
+The changes I made were :
+    1) In the register.ejs after the password input
+        <ul class="text-gray-600 text-sm">
+            <% if (messages.passwordValidations) { 
+                const validations = JSON.parse(messages.passwordValidations);
+            %>
+                <li class="<%= validations.minLength ? 'text-green-500' : 'text-red-500' %>">
+                    <%= validations.minLength ? '✓' : '✗' %> At least 8 characters
+                </li>
+                <li class="<%= validations.uppercase ? 'text-green-500' : 'text-red-500' %>">
+                    <%= validations.uppercase ? '✓' : '✗' %> Contains an uppercase letter (A-Z)
+                </li>
+                <li class="<%= validations.lowercase ? 'text-green-500' : 'text-red-500' %>">
+                    <%= validations.lowercase ? '✓' : '✗' %> Contains a lowercase letter (a-z)
+                </li>
+                <li class="<%= validations.number ? 'text-green-500' : 'text-red-500' %>">
+                    <%= validations.number ? '✓' : '✗' %> Contains a number (0-9)
+                </li>
+            <% } %>
+        </ul>   
+    
+    2) In the postRegister method in authController.js
+
+        const passwordValidations = isValidPassword(password);
+        if (!passwordValidations.isValid) {
+            // req.flash('error', 'Password does not meet the requirements');
+            // console.log(passwordValidations);
+            req.flash('passwordValidations', JSON.stringify(passwordValidations));
+            req.flash('name', name);
+            req.flash('email', email);
+            req.flash('password', password);
+            return res.redirect('/register');
+        }
+
+        and the validation function 
+
+        function isValidPassword(password) {
+            const minLength = 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumber = /\d/.test(password);
+            
+            return {
+                minLength: password.length >= minLength,
+                uppercase: hasUpperCase,
+                lowercase: hasLowerCase,
+                number: hasNumber,
+                isValid: password.length >= minLength && hasUpperCase && hasLowerCase && hasNumber
+            };
+        }
+
+
+II) 

@@ -108,3 +108,17 @@ So the solution is to use e.currentTarget property
 
 
 
+//Authentication system walkthrough
+
+//Resister Functionality
+So first we made a route to recieve the post request in the authController and then the form posting system in the register views
+Then we are going to built something to store the form data and register a user
+1) First we have to make a model in mongoDB to store the user data
+2) then after making model we started making some validation check in the post request in authController
+    i) In this validation part we are going to give some warnings if irregular data is submitted
+    ii) we are going to use flash to display it, 
+    iii) Important thing about flash is that it is a library on the backend that helps to show flash messages on the frontend, and it works for a particular request only, after refresh the changes are removed
+    iv) when we made a request, we can use flash by req.flash('error', 'error-message') on backend and we can fetch it on frontend using {messages.error} 
+    v) Now it was working fine, like whenever a field is empty then it shows the error but the problem was that the filled out fields were also vanishing along with the request
+    To tackle this problem we sended the name and email fields also along with the error message from the backend and used those to display the filled out values on the frontend in the input boxes using the 'value' attribute.
+    vi) 
