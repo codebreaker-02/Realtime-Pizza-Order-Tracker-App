@@ -427,3 +427,20 @@ section.status .noty_body {
   font-size: 14px;
   margin-top: 8px;
 }
+
+.container-private {
+  max-width: 90%;
+}
+
+@media (max-width: 1060px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 768px) {
+  .status-box ul li span::before {
+    font-size: 34px;
+  }
+}

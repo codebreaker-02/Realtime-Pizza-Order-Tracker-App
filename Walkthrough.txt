@@ -132,3 +132,33 @@ Then we are going to built something to store the form data and register a user
             // then only call the initadmin()
             // and some other logic
         }
+
+    
+
+
+
+
+
+
+//Making it responsive
+
+1) So, he was using the container class, which has certain breakpoints to adjust its size according to the size screens but it was not working properly in case of fully fluid viewport, So I searched about it and found on the official site that it is meant for certain sizes of screens only and it is not useful for the person wanting fully fluid viewport
+
+2) On the home page: 
+    The other things were able to adjust themselves accordingly but the pizza menu section was a bit inappropriate so, we fixed its responsiveness using grid-cols class of tailwind by specifiying the number of colums of grid for various screen sizes
+
+    And also I made a class to replace all the container class, and gave them a max-width of 90%; to give it a space horizontally from both the sides
+
+3) On the cart page: 
+    The cart on the normal laptop screen wass in center but we did't want that and that's why we kept it for large screens only by using the tailwind class 'xl:w-1/2'
+
+4) On the customer/orders page:
+    This page had a table which was to be made responsive, so what we did is we made the table scrollable instead of the whole page using these properties for the screen size less than 1060px:
+                    display: block;
+                    overflow-x: auto;
+                    white-space: nowrap;
+    
+5) On the admin/orders page:
+    This page also had a table and here we don't had to do anything because of the already made changes on table.
+    
+    That's all 

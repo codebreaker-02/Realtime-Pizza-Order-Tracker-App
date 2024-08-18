@@ -3,9 +3,9 @@
 @import '~noty/src/themes/mint.scss';
 
 *{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 body {
     font-family: 'Lato', sans-serif; //fallback font for Lato is sans-serif, i.e if Lato is not applied then sans-serif will be used
@@ -191,4 +191,23 @@ section.status{
     float: right;
     font-size: 14px;
     margin-top: 8px;
+}
+
+//this container-private is made by me 
+.container-private{
+    max-width: 90%;
+}
+@media(max-width: 1060px){
+    table{
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+//Add hamburger menu from 475px
+
+@media(max-width: 768px){
+    .status-box ul li span::before{
+        font-size: 34px;
+    }
 }
