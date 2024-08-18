@@ -122,3 +122,13 @@ Then we are going to built something to store the form data and register a user
     v) Now it was working fine, like whenever a field is empty then it shows the error but the problem was that the filled out fields were also vanishing along with the request
     To tackle this problem we sended the name and email fields also along with the error message from the backend and used those to display the filled out values on the frontend in the input boxes using the 'value' attribute.
     vi) 
+
+
+
+//We wanted to run the initadmin() function on the client side for the admin request only 
+=> So what we did is just called fetched the request's path using "window.location.pathname"
+    and stored it a variable, and then we checked if this string contains admin or not using if(window.location.pathname.includes('admin'))
+        {
+            // then only call the initadmin()
+            // and some other logic
+        }

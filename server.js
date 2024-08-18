@@ -9,6 +9,7 @@ const flash = require('express-flash') // Import the express-flash module
 // We always use capital with the variable if it consists a Class or a Constructor value in them
 const MongoDbStore = require('connect-mongo') //Import the connect-mongo module
 const passport = require('passport')
+const Emitter = require('events')
 
 const app = express(); // Create an instance of the express application
 const PORT = process.env.PORT || 3000; // Set the port number
@@ -35,6 +36,10 @@ const conn = async () => {
 //Session Store
 //It will use our default connection(conn defined above) and creates a collection named sessions
 let mongoStore = MongoDbStore.create({ mongoUrl: url })
+
+//Event Emitter 
+const eventEmitter = new Emitter();
+app.set('eventEmitter', eventEmitter);
 
 //Session config 
 app.use(session({
@@ -85,6 +90,29 @@ app.set('view engine', 'ejs');
 require('./routes/web')(app);
 
 // Start the server and listen on the specified port
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+//socket
+
+const io = require('socket.io')(server)
+
+io.on('connection', (socket) => {
+    //Join 
+    // Here we have to create private rooms for individual orders because they are going to change the status of the order in real-time
+    //So the next task was to select a name for the room, so we can use the order id as the name of the room because it is unique and also it can be used to identify the order
+    socket.on('join', (orderId) => {
+        socket.join(orderId);
+    })  
+})
+
+//This is for the user order, whenever a request from backend comes for updating the client side it helps by sending an update event to user
+eventEmitter.on('orderUpdated', (data)=>{
+    io.to(`order_${data.id}`).emit('orderUpdated', data);
+})
+
+eventEmitter.on('orderPlaced', (data)=>{
+    io.to('adminRoom').emit('orderPlaced', data);
+})
