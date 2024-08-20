@@ -6,20 +6,20 @@
                 <p class="text-gray-500 text-lg mb-12"> You probably haven't ordered a pizza yet.
                     To order a pizza, go back to the main page.
                 </p>
-                <img class="w-1/3 mx-auto" src="/img/empty-cart.png" alt="empty-cart">
+                <img class="w-1/3 mx-auto" src="/img/empty-cart.png" alt="empty-cart" loading="lazy">
                 <a href="/" class="inline-block px-6 py-2 rounded-full btn-primary text-white font-bold mt-12">Go Back</a>
             </div>
         </div>
     <% } else { %>
         <div class="order container-private mx-auto xl:w-1/2">
             <div class="flex items-center border-b border-gray-300 pb-4">
-                <img src="/img/cart-black.png" alt="">
+                <img src="/img/cart-black.png" alt="" loading="lazy">
                 <h1 class="font-bold ml-4 text-2xl">Order Summary</h1>
             </div>
             <div class="pizza-list">
                 <% Object.values(session.cart.items).forEach(pizza => { %>
                     <div class="flex items-center my-8">
-                        <img class="w-24" src="/img/<%= pizza.item.image %>" alt="">
+                        <img class="w-24" src="/img/<%= pizza.item.image %>" alt="" loading="lazy">
                         <div class="ml-4 flex-1">
                             <h1><%= pizza.item.name %></h1>
                             <span><%= pizza.item.size %></span>

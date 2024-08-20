@@ -14,7 +14,7 @@
 <body>
     <nav class="container-private mx-auto flex items-center justify-between py-4">
         <div>
-            <a href="/"><img src="/img/logo.png" alt="logo"></a>
+            <a href="/"><img src="/img/logo.png" alt="logo" loading="lazy"></a>
         </div>
         <div>
             <ul class="flex items-center">
@@ -34,7 +34,7 @@
                         <span class="text-white font-bold pr-2" id="cartCounter">
                             <%= session.cart ? session.cart.totalQty : '0' %>
                         </span>
-                        <img src="/img/cart.png" alt="cart-logo" >
+                        <img src="/img/cart.png" alt="cart-logo" loading="lazy">
                     </a>
                 </li>
             </ul>

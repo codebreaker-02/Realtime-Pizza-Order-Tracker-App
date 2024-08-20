@@ -16,13 +16,10 @@ const PORT = process.env.PORT || 3000; // Set the port number
 
 dotenv.config(); // Configure the dotenv module
 
-//Database connection -- local connection
-const url = 'mongodb://127.0.0.1:27017/pizza';
-
 const conn = async () => {
     try {
         await mongoose
-            .connect(url)
+            .connect(process.env.MONGO_CONNECTION_URL)
             .then(() => {
                 console.log("Database Connected....");
             });
@@ -35,7 +32,7 @@ const conn = async () => {
 
 //Session Store
 //It will use our default connection(conn defined above) and creates a collection named sessions
-let mongoStore = MongoDbStore.create({ mongoUrl: url })
+let mongoStore = MongoDbStore.create({ mongoUrl: process.env.MONGO_CONNECTION_URL})
 
 //Event Emitter 
 const eventEmitter = new Emitter();
@@ -89,6 +86,9 @@ app.set('view engine', 'ejs');
 //Routes from '/routes/web.js'
 require('./routes/web')(app);
 
+app.use((req, res) => {
+    res.status(404).render('errors/404');
+})
 // Start the server and listen on the specified port
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
