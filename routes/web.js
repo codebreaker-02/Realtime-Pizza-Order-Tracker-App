@@ -43,6 +43,7 @@ function initRoutes(app){
     
     // Define a route for the admin orders page
     app.get('/admin/orders', admin, adminOrderController().index);
+    
     // Define a route for the admin order status page
     app.post('/admin/order/status', admin, adminStatusController().update);
 }
