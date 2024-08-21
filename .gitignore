@@ -26,7 +26,6 @@ yarn-error.log
 
 # Dependency lock files (choose one based on your package manager)
 package-lock.json
-yarn.lock
 
 # OS specific folders
 .DS_Store
