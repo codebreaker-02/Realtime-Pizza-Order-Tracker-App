@@ -48,6 +48,7 @@ function orderController(){
         },
         async index(req, res){
             const orders = await Order.find({ customerId: req.user._id }, null, { sort: { 'createdAt': -1 } });
+            res.header('Cache-Control', 'no-store')
             res.render('customers/orders', { orders: orders, moment: moment });
         },
         show(req, res){
